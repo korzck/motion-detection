@@ -1,10 +1,8 @@
-#include "core/core.hpp"
-#include "highgui/highgui.hpp"
-
+#include <opencv2/opencv.hpp> 
 using namespace cv;
-using namespace std;
 
-int main( int argc, char** argv )
+int main() 
 {
-    return 0;
+    Mat image = imread("image.jpeg"); 
+    return 0; 
 }
