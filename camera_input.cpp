@@ -10,10 +10,11 @@ int main(int argc, char** argv)
     if (!cap.isOpened())
         cout << "cannot open camera" << endl;
     Mat frame;
-    imshow("main", frame);
+    
     while(true)
     {
         cap >> frame;
         imshow("main", frame);
+        waitKey(100);
     }
 }
