@@ -1,8 +1,7 @@
-a.out
+cmake_install.cmake
 .vscode/
 CMakeFiles/
 CMakeCache.txt
 Makefile
 main
 image
-cmake_install.cmake
