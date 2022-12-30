@@ -4,12 +4,15 @@ using namespace cv;
 using namespace std;
 int main(int argc, char** argv)
 {
-    VideoCapture cap = VideoCapture(0);
+    namedWindow("main");
+    VideoCapture cap(0);
+    if (!cap.isOpened())
+        cout << "cannot open camera" << endl;
     Mat frame;
-    for (int i = 0; ; i++)
+    while(true)
     {
-        if(!cap.read(frame))
-            cout << "Streaming ended" << endl;
+        cap >> frame;
         imshow("main", frame);
+        waitKey(25);
     }
 }
