@@ -6,9 +6,11 @@ int main(int argc, char** argv)
 {
     namedWindow("main");
     VideoCapture cap(0);
+    
     if (!cap.isOpened())
         cout << "cannot open camera" << endl;
     Mat frame;
+    imshow("main", frame);
     while(true)
     {
         cap >> frame;
