@@ -5,11 +5,11 @@ using namespace std;
 int main(int argc, char** argv)
 {
     VideoCapture cap = VideoCapture(0);
-    OutputArray frame = {0};
+    Mat frame;
     for (int i = 0; ; i++)
     {
-        if(!cap.read())
+        if(!cap.read(frame))
             cout << "Streaming ended" << endl;
-
+        imshow("main", frame);
     }
 }
