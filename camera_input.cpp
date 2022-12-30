@@ -13,6 +13,5 @@ int main(int argc, char** argv)
     {
         cap >> frame;
         imshow("main", frame);
-        waitKey(25);
     }
 }
