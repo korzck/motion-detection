@@ -7,7 +7,10 @@ using namespace cv;
 Mat filter(Mat image)
 {
     // Mat image = imread("image.jpeg");
-    Mat kernel1 = (Mat_<double>(3,3) << -1, -1, -1, 0, 0, 0, 1, 1, 1);
+    Mat kernel1 = (Mat_<double>(3,3) << -1, -1, -1,
+                                        -1, 50, -1,
+                                        -1, -1, -1);
+    // Mat kernel1 = Mat::ones(10, 10, CV_64F)/25;
     Mat filtered_image; 
     filter2D(image, filtered_image, -1 , kernel1, Point(-1, -1), 0, BORDER_DEFAULT);
     return filtered_image;
