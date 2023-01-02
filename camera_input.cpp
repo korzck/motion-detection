@@ -5,19 +5,22 @@ using namespace cv;
 using namespace std;
 int main(int argc, char** argv)
 {
+    namedWindow("main");
     VideoCapture cap(0);
     
     if (!cap.isOpened())
         cout << "cannot open camera" << endl;
     Mat frame;
-    namedWindow("original");
+    
     while(true)
     {
         cap >> frame;
-        imshow("original", frame);
-        // filter(frame);
-        // imshow("filtered", frame);
-        
+        imshow("main", frame);
+        int c = waitKey(1);
+        if(c == int('c'))
+        {
+            destroyAllWindows();
+            return 0;
+        }
     }
-    destroyAllWindows();
 }
