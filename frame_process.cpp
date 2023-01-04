@@ -10,9 +10,26 @@ Mat filter(Mat image)
     Mat kernel1 = (Mat_<double>(3,3) << -1, -1, -1,
                                         -1, 50, -1,
                                         -1, -1, -1);
-    // Mat kernel1 = Mat::ones(10, 10, CV_64F)/25;
+    Mat laplassian_of_gaussian = (Mat_<double>(5,5) <<   0,   0,  -1,   0,  0,
+                                                         0,  -1,  -2,  -1,  0,
+                                                        -1,  -2, 16,  -2, -1,
+                                                         0,  -1,  -2,  -1,  0,
+                                                         0,   0,  -1,   0,  0);
+    Mat blacking = (Mat_<double>(3,3) << -1, -1, -1,
+                                         1, 1, 1, 
+                                         1, 1, 1);
+    
     Mat filtered_image; 
-    filter2D(image, filtered_image, -1 , kernel1, Point(-1, -1), 0, BORDER_DEFAULT);
+    filter2D(image, filtered_image, -1 , blacking, Point(-1, -1), 0, BORDER_DEFAULT);
+    // filter2D(image, filtered_image, -1 , Mat::ones(1,1,CV_64F), Point(-1, -1), 0, BORDER_DEFAULT);
+    // filter2D(filtered_image, image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
+    // filter2D(image, filtered_image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
+    // filter2D(filtered_image, image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
+    // filter2D(image, filtered_image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
+
+    // filter2D(filtered_image, image, -1 , Mat::ones(5,5, CV_64F)*0.25, Point(-1, -1), 0, BORDER_DEFAULT);
+
+
     return filtered_image;
     // imshow("Original", image);
     // imshow("Filtered", identity);
