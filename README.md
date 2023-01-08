@@ -18,4 +18,4 @@ Blacking matrix for example 2:
 -1 -1 -1
 ```
 
-![](https://github.com/korzck/motion-detection/blob/main/example1.gif)
+![](https://github.com/korzck/motion-detection/blob/main/example2.gif)
