@@ -10,3 +10,12 @@ Amplifying matrix for example 1:
 ```
 
 ![](https://github.com/korzck/motion-detection/blob/main/example1.gif)
+
+Blacking matrix for example 2:
+```
+-1 -1 -1
+-1 50 -1
+-1 -1 -1
+```
+
+![](https://github.com/korzck/motion-detection/blob/main/example1.gif)
