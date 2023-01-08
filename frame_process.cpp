@@ -15,16 +15,16 @@ Mat filter(Mat image)
                                                         -1,  -2, 16,  -2, -1,
                                                          0,  -1,  -2,  -1,  0,
                                                          0,   0,  -1,   0,  0);
-    Mat blacking = (Mat_<double>(3,3) << -1, -1, -1,
-                                         1, 1, 1, 
-                                         1, 1, 1);
-    Mat ident = (Mat_<double>(3,3) <<    0, 0, 0,
-                                        0, 0.01, 0, 
+    Mat blacking = (Mat_<double>(3,3) << -1, 1, -1,
+                                         -1, 1, -1, 
+                                         -1, 1, -1);
+    Mat ident = (Mat_<double>(3,3) <<   0, 0, 0,
+                                        0, 1, 0, 
                                         0, 0, 0);
     
     Mat filtered_image; 
     filter2D(image, filtered_image, -1 , ident, Point(-1, -1), 0, BORDER_DEFAULT);
-    // filter2D(image, filtered_image, -1 , Mat::ones(1,1,CV_64F), Point(-1, -1), 0, BORDER_DEFAULT);
+    filter2D(filtered_image, image, -1 , blacking*100000, Point(-1, -1), 0, BORDER_DEFAULT);
     // filter2D(filtered_image, image, -1 , blacking*100, Point(-1, -1), 0, BORDER_DEFAULT);
     // filter2D(image, filtered_image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
     // filter2D(filtered_image, image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
@@ -33,7 +33,7 @@ Mat filter(Mat image)
     // filter2D(filtered_image, image, -1 , Mat::ones(5,5, CV_64F)*0.25, Point(-1, -1), 0, BORDER_DEFAULT);
 
 
-    return filtered_image*100;
+    return image;
     // imshow("Original", image);
     // imshow("Filtered", identity);
     // waitKey();
