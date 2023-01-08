@@ -1,6 +1,6 @@
 # Frames substraction motion detection
 
-This project uses OpenCV video capture (from `/dev/video0` stream) and frame filtering to detect ant difference in the picture. Refreshing (comparing) rate is at each second frame, in other words difference is calculated in this formula: `difference = (current frame) - (previous frame)`. 
+This project uses OpenCV video capture (from standard video input stream) and frame filtering to detect ant difference in the picture. Refreshing (comparing) rate is at each second frame. Difference is calculated in this formula: `difference = (current frame) - (previous frame)`. 
 
 Amplifying matrix for example 1:
 ```
