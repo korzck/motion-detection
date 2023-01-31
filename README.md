@@ -21,7 +21,7 @@ Blacking matrix for example 2:
 ![](https://github.com/korzck/motion-detection/blob/main/example2.gif)
 
 
-##TODO:
+## TODO:
 
 - Apply k-means method to draw rectangles around detections
 - Apply Gaussian Mixture Models to cluster detections (somehow)
