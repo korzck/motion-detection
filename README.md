@@ -25,3 +25,4 @@ Blacking matrix for example 2:
 
 - Apply k-means method to draw rectangles around detections
 - Apply Gaussian Mixture Models to cluster detections (somehow)
+- Compare these two
