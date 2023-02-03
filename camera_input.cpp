@@ -15,7 +15,7 @@ int main(int argc, char** argv)
     Mat background;
     cap >> comparing_frame;
     int counter = 0;
-    background = comparing_frame.clone();
+    // background = comparing_frame.clone();
     while(true)
     {
         cap >> frame;
@@ -29,14 +29,15 @@ int main(int argc, char** argv)
         // imshow("difference", (background - frame));
         
         // counter++;
-        // if (counter == 1)
-        // {
-        //     background = frame.clone();
-        //     counter = 0;
-        // }
-        if (counter%100 == 0)
+        if (counter == 2)
         {
+            background = frame.clone();
             counter = 0;
+        }
+        // if (counter%1 == 0)
+        {
+            // counter = 0;
+            // comparing_frame = background - frame;
             comparing_frame = comparing_frame - frame; //get difference
             imshow("filtered", filter(comparing_frame)); //show amplified difference
             comparing_frame = frame.clone(); //write current frame

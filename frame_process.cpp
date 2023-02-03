@@ -7,39 +7,30 @@ using namespace cv;
 Mat filter(Mat image)
 {
     // Mat image = imread("image.jpeg");
-    Mat kernel1 = (Mat_<double>(3,3) << -1, -1, -1,
-                                        -1, 50, -1,
-                                        -1, -1, -1);
-    Mat laplassian_of_gaussian = (Mat_<double>(5,5) <<   0,   0,  -1,   0,  0,
-                                                         0,  -1,  -2,  -1,  0,
-                                                        -1,  -2, 16,  -2, -1,
-                                                         0,  -1,  -2,  -1,  0,
-                                                         0,   0,  -1,   0,  0);
-    Mat blacking = (Mat_<double>(3,3) << -1, 1, -1,
-                                         -1, 1, -1, 
-                                         -1, 1, -1);
-    Mat ident = (Mat_<double>(3,3) <<   0, 0, 0,
-                                        0, 1, 0, 
-                                        0, 0, 0);
-    
+    Mat sharpening = (Mat_<double>(3,3) <<  0, 0, 0,
+                                            0, 1, 0,
+                                            0, 0, 0);
     Mat filtered_image; 
-    filter2D(image, filtered_image, -1 , ident, Point(-1, -1), 0, BORDER_DEFAULT);
-    filter2D(filtered_image, image, -1 , blacking*100000, Point(-1, -1), 0, BORDER_DEFAULT);
-    // filter2D(filtered_image, image, -1 , blacking*100, Point(-1, -1), 0, BORDER_DEFAULT);
-    // filter2D(image, filtered_image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
-    // filter2D(filtered_image, image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
-    // filter2D(image, filtered_image, -1 , laplassian_of_gaussian, Point(-1, -1), 0, BORDER_DEFAULT);
+    filter2D(image, filtered_image, -1 , sharpening, Point(-1, -1), 0, BORDER_DEFAULT);
+    for (int i = 0; i < filtered_image.rows; i++)
+    {
+        for (int j = 0; j < filtered_image.cols; j++)
+        {
+            Vec3b& color = filtered_image.at<Vec3b>(i, j);
+            if (color[0] + color[1] + color[2] > 50)
+            {
+                color[0] = 255;
+                color[1] = 255;
+                color[2] = 255;
+            } else 
+            {
+                color[0] = 0;
+                color[1] = 0;
+                color[2] = 0;
+            }
+            // filtered_image.at<Vec3d>(Point(i, j)) = color;
+        }
+    }
 
-    // filter2D(filtered_image, image, -1 , Mat::ones(5,5, CV_64F)*0.25, Point(-1, -1), 0, BORDER_DEFAULT);
-
-
-    return image;
-    // imshow("Original", image);
-    // imshow("Filtered", identity);
-    // waitKey();
-    // imwrite("identity.jpg", identity);
-    // destroyAllWindows();
-
-    // waitKey();
-    // destroyAllWindows();
+    return filtered_image;
 }
