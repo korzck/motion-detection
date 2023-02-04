@@ -1,4 +1,5 @@
 #include <opencv2/opencv.hpp>
+#include "kmeans.cpp"
 #include <iostream>
 
 using namespace std;
@@ -28,9 +29,8 @@ Mat filter(Mat image)
                 color[1] = 0;
                 color[2] = 0;
             }
-            // filtered_image.at<Vec3d>(Point(i, j)) = color;
         }
     }
 
-    return filtered_image;
+    return kmeans_filter(filtered_image);
 }
