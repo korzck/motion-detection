@@ -1,6 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include <cstdlib>
 #include <cmath>
+#include <vector>
 #include <iostream>
 using namespace cv;
 using namespace std;
@@ -9,7 +10,7 @@ Mat draw_mark(Mat image, Vec2i point)
 {
     int l = image.rows;
     int h = image.cols;
-    int radius = 10;
+    int radius = 5;
     Vec3i left_upper;
     Vec3i right_bottom;
 
@@ -39,43 +40,103 @@ Mat draw_mark(Mat image, Vec2i point)
     return image;
 }
 
-Mat kmeans_filter(Mat image)
+int distance(Vec2i a, Vec2i b)
 {
+    return (int)sqrt(pow(b[0]-a[0], 2) + pow(b[1]-a[1], 2));
+}
+
+int find_nearest_centroid(Vec2i point, vector<Vec2i> centroids)
+{
+    int min_distance = 100000;
+    int min_index = 0;
+    int counter = -1;
+    for(auto& centroid : centroids)
+    {
+        counter++;
+        if (distance(point, centroid) < min_distance)
+        {
+            min_distance = distance(point, centroid);
+            min_index = counter;
+        }
+    }
+    return min_index;
+}
+
+Mat kmeans_filter(Mat image, Mat original)
+{
+    // return original;
     int length = image.rows;
     int height = image.cols;
-    Vec2i k = {rand() % length, rand() % height};
-    Vec2i summ = {0, 0};
-    // Vec2i mean = {0, 0};
-    int a = 0;
-    int b = 0;
-    int n = 0;
 
-    for (int i = 0; i < image.rows; i++)
-        for (int j = 0; j < image.cols; j++)
-            if (image.at<Vec3b>(i, j) == Vec3b(255, 255, 255))
+    int n = 0;
+    int k = 20;
+    
+    vector<Vec2i> centroids(k);
+    for (auto& e : centroids)
+        e = {rand() % length, rand() % height};
+
+    vector<Vec2i> centroids_sum(k);
+    
+    vector<int> centroid_points_num(k);
+    for (auto& e : centroid_points_num)
+        e = 0;
+
+    for (int y = 0; y < image.rows; y++)
+        for (int x = 0; x < image.cols; x++)
+            if (image.at<Vec3b>(y, x) == Vec3b(255, 255, 255))
                 n++;
-    if (n<500) return image;
-    // cout << n << endl;
-    // for (int c = 0; c < 100; c++)
+
+    if (n < 100) return original;
+
+    int point_nearest_centroid[n] = {0};
+
+    int point;
+
+    for (int c = 0; c < 10; c++) //convergence cycle
     {
-        summ = {0, 0};
-        for (int i = 0; i < image.rows; i++)
+        point = 0;
+
+        for (auto& e : centroids_sum)
+            e = {0, 0};
+        
+        for (auto& e : centroid_points_num)
+            e = 0;
+
+        for (int y = 0; y < image.rows; y++)
         {
-            for (int j = 0; j < image.cols; j++)
+            for (int x = 0; x < image.cols; x++)
             {
-                if (image.at<Vec3b>(i, j) == Vec3b(255, 255, 255))
+                if (image.at<Vec3b>(y, x) == Vec3b(255, 255, 255))
                 {
-                    summ[0] += i;
-                    summ[1] += j; 
+                    point_nearest_centroid[point] = find_nearest_centroid(Vec2i(y, x), centroids);
+                    centroids_sum[point_nearest_centroid[point]][0] += y;
+                    centroids_sum[point_nearest_centroid[point]][1] += x;
+                    centroid_points_num[point_nearest_centroid[point]]++;
+                    point++;
                 }
             }
         }
+        for (int d = 0; d < k; d++)
+        {
+            if (centroid_points_num[d] < 50)
+            {
+                centroids[d][0] = -100;
+                centroids[d][1] = -100;
+                continue;
+            } 
+            // cout << centroid_points_num[d] << endl;
+            centroids[d][0] = (centroids_sum[d][0])/centroid_points_num[d];
+            centroids[d][1] = (centroids_sum[d][1])/centroid_points_num[d];
+            
+        }
 
-        k[0] = (summ[0]/n);
-        k[1] = (summ[1]/n);    
+        // k[0] = (summ[0]/n);
+        // k[1] = (summ[1]/n);    
         // cout << k << endl;
     }
-    return draw_mark(image, k);;
 
+    for(auto& e : centroids)
+        original = draw_mark(original, e);
+    return original;
 }
 

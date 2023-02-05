@@ -5,7 +5,7 @@ using namespace cv;
 using namespace std;
 int main(int argc, char** argv)
 {
-    VideoCapture cap(0);
+    VideoCapture cap(2);
     
     if (!cap.isOpened())
         cout << "cannot open camera" << endl;
@@ -24,9 +24,15 @@ int main(int argc, char** argv)
             destroyAllWindows();
             return 0;
         }        
+        counter++;
+        if (counter == 2)
+        {
+            cap >> comparing_frame;
+            counter = 0;
+        }
 
-        comparing_frame = comparing_frame - frame;
-        imshow("filtered", filter(comparing_frame));
-        comparing_frame = frame.clone();
+        // comparing_frame = comparing_frame - frame;
+        imshow("filtered", filter(comparing_frame - frame, frame));
+        // comparing_frame = frame.clone();
     }
 }
