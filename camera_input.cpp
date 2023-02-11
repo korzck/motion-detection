@@ -31,8 +31,6 @@ int main(int argc, char** argv)
             counter = 0;
         }
 
-        // comparing_frame = comparing_frame - frame;
         imshow("filtered", filter(comparing_frame - frame, frame));
-        // comparing_frame = frame.clone();
     }
 }
