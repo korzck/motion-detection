@@ -2,7 +2,7 @@
 
 This project uses OpenCV video capture (from standard video input stream) and frame filtering to detect ant difference in the picture. Refreshing (comparing) rate is at each second frame. Difference is calculated in this formula: `difference = (current frame) - (previous frame)`. 
 
-Each frame is processed to set every pixel to white if sum of its RGB values is more than some value and to black if not. Additionally a few methods of noice reduce are set to substracted image. In this filtered image a k-means clustering is applied and drawn on the input image. 
+Each frame is processed to set every pixel to white if sum of its RGB values is more than some value and to black if not. Additionally a few methods of noise reduction are applied to substracted image. In this filtered image a k-means clustering is applied and drawn on the input image. 
 
 Output video:
 
