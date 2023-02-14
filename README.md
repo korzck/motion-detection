@@ -15,6 +15,4 @@ Filtered substracted image with k-means:
 
 ## TODO:
 
-- Apply k-means method to draw rectangles around detections ✅
 - Apply Gaussian Mixture Models to cluster detections (somehow)
-- Compare these two
