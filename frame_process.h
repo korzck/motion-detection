@@ -1,5 +1,5 @@
 #include <opencv2/opencv.hpp>
-#include "kmeans.cpp"
+#include "kmeans.h"
 #include <iostream>
 
 using namespace std;
