@@ -1,6 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
-#include "frame_process.cpp"
+#include "frame_process.h"
 using namespace cv;
 using namespace std;
 int main(int argc, char** argv)
